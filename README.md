@@ -3,7 +3,7 @@ An architecture proposal has been made to the SACM working group, and this repos
 
 ![Proposed Architecture](https://raw.githubusercontent.com/CISecurity/Integration/master/docs/img/mandm-arch.png)
 
-#Scenario 1: New Configuration Assessment Available
+# Scenario 1: New Configuration Assessment Available
 
 ![Configuration Assessment Scenario](https://raw.githubusercontent.com/CISecurity/Integration/master/docs/img/ietf-101-hackathon%202.png)
 
