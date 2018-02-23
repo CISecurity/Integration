@@ -1,0 +1,14 @@
+
+*.iml
+
+*.bin
+
+publish-assessment-content/.idea/workspace.xml
+
+publish-assessment-content/.idea/modules/publish-assessment-content_test.iml
+
+publish-assessment-content/.idea/modules/publish-assessment-content_main.iml
+
+publish-assessment-content/.gradle/4.0/fileHashes/fileHashes.lock
+
+publish-assessment-content/.gradle/4.0/fileHashes/fileHashes.bin

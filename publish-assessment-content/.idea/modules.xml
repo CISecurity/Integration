@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/publish-assessment-content.iml" filepath="$PROJECT_DIR$/.idea/modules/publish-assessment-content.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/publish-assessment-content_main.iml" filepath="$PROJECT_DIR$/.idea/modules/publish-assessment-content_main.iml" group="publish-assessment-content" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/publish-assessment-content_test.iml" filepath="$PROJECT_DIR$/.idea/modules/publish-assessment-content_test.iml" group="publish-assessment-content" />
+    </modules>
+  </component>
+</project>

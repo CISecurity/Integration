@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.googlecode.concurrentlinkedhashmap:concurrentlinkedhashmap-lru:1.0_jdk5">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.googlecode.concurrentlinkedhashmap/concurrentlinkedhashmap-lru/1.0_jdk5/c4802841d8693f3fe85373fdfab4fea223b3f0a0/concurrentlinkedhashmap-lru-1.0_jdk5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.googlecode.concurrentlinkedhashmap/concurrentlinkedhashmap-lru/1.0_jdk5/17eefa1e9a676a4351c51ca84b6b7fcc73b342cb/concurrentlinkedhashmap-lru-1.0_jdk5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
