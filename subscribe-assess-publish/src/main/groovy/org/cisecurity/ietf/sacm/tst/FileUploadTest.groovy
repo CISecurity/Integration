@@ -74,7 +74,6 @@ class FileUploadTest {
 		def f = "CIS-CAT-DEV-CIS_Microsoft_Windows_10_Enterprise_Release_1703_Benchmark-ARF-20180205T191833Z.xml"
 
 		def file = new File("${p}\\${f}")
-		def upl  = new UPL()
 
 		log.info "Getting Slot..."
 		Slot slot = manager.requestSlot(file.name, file.length())
