@@ -1,4 +1,4 @@
-package org.cisecurity.ietf.sacm
+package org.cisecurity.ietf.sacm.tst
 
 import groovy.xml.XmlUtil
 import groovyx.net.http.ContentType

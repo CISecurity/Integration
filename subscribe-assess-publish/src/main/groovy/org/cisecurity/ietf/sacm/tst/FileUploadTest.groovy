@@ -1,8 +1,6 @@
-package org.cisecurity.ietf.sacm
+package org.cisecurity.ietf.sacm.tst
 
 import groovyx.net.http.ContentType
-import groovyx.net.http.HTTPBuilder
-import groovyx.net.http.Method
 import groovyx.net.http.RESTClient
 import org.cisecurity.assessor.util.AssessorUtilities
 import org.jivesoftware.smack.AbstractXMPPConnection
@@ -13,11 +11,6 @@ import org.jivesoftware.smackx.httpfileupload.HttpFileUploadManager
 import org.jivesoftware.smackx.httpfileupload.UploadProgressListener
 import org.jivesoftware.smackx.httpfileupload.element.Slot
 import org.slf4j.LoggerFactory
-
-import javax.net.ssl.SSLContext
-import javax.net.ssl.TrustManager
-import javax.net.ssl.X509TrustManager
-import java.security.SecureRandom
 
 /**
  * File Upload Test
@@ -105,51 +98,6 @@ class FileUploadTest {
 			println("Body:\n${restresponse.data}")
 		}
 
-//		log.info "Starting HTTPBuilder upload"
-//		def http = new HTTPBuilder(slot.putUrl)
-//		http.ignoreSSLIssues()
-//		http.headers["Accept"] = "application/xml"
-//
-//		http.request(Method.PUT, ContentType.XML) { req ->
-//
-//			body = file
-//
-//			response.success = {
-//				println " - Assessment report successfully uploaded to ${slot.putUrl}"
-//			}
-//
-//			response.failure = { resp ->
-//				println " - Unexpected failure: ${resp.statusLine}"
-//			}
-//
-//			response."401" = { resp ->
-//				println " - Assessment failed to upload to ${slot.putUrl}. Authentication Failure.  Please ensure your authentication token is correct."
-//			}
-//
-//			response."500" = { resp ->
-//				println " - Assessment failed to upload to ${slot.putUrl}. Response Status: ${resp.statusLine}"
-//			}
-//
-//		}
-//		log.info "Finishing HTTPBuilder upload"
-
-//		log.info "Starting upload..."
-//
-//		try {
-//			def url = manager.uploadFile(file, upl)
-//
-//			log.info "Upload complete."
-//		} catch (Exception e) {
-//			log.error "Exception.  Timed out?", e
-//		}
-
 		connection.disconnect()
-	}
-}
-
-class UPL implements UploadProgressListener {
-	@Override
-	void onUploadProgress(long uploadedBytes, long totalBytes) {
-		println "Uploaded ${uploadedBytes}/${totalBytes}"
 	}
 }

@@ -1,4 +1,4 @@
-package org.cisecurity.ietf.sacm
+package org.cisecurity.ietf.sacm.tst
 
 import org.slf4j.LoggerFactory
 

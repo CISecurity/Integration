@@ -1,4 +1,4 @@
-package org.cisecurity.ietf.sacm
+package org.cisecurity.ietf.sacm.tst
 
 import com.xebialabs.overthere.CmdLine
 import groovy.xml.XmlUtil
@@ -22,7 +22,6 @@ import org.jivesoftware.smack.ConnectionConfiguration
 import org.jivesoftware.smack.XMPPException
 import org.jivesoftware.smack.tcp.XMPPTCPConnection
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
-import org.jivesoftware.smackx.disco.packet.DiscoverItems
 import org.jivesoftware.smackx.pubsub.AccessModel
 import org.jivesoftware.smackx.pubsub.ConfigureForm
 import org.jivesoftware.smackx.pubsub.ItemPublishEvent
@@ -34,10 +33,6 @@ import org.jivesoftware.smackx.pubsub.SimplePayload
 import org.jivesoftware.smackx.pubsub.listener.ItemEventListener
 import org.jivesoftware.smackx.xdata.packet.DataForm
 import org.slf4j.LoggerFactory
-
-import javax.xml.transform.TransformerFactory
-import javax.xml.transform.stream.StreamResult
-import javax.xml.transform.stream.StreamSource
 
 /**
  * Created by wmunyan on 2/23/2018.
