@@ -23,16 +23,36 @@ dependencies {
     // https://mvnrepository.com/artifact/org.igniterealtime/whack
     compile group: 'org.igniterealtime', name: 'whack', version: '2.0.1', ext: 'pom'
 
+//    // https://mvnrepository.com/artifact/org.igniterealtime.smack/smack-core
+//    compile group: 'org.igniterealtime.smack', name: 'smack-core', version: '4.2.3'
+//
+//    // https://mvnrepository.com/artifact/org.igniterealtime.smack/smack-extensions
+//    compile group: 'org.igniterealtime.smack', name: 'smack-extensions', version: '4.2.3'
+//
+//    // https://mvnrepository.com/artifact/org.igniterealtime.smack/smack-tcp
+//    //compile group: 'org.igniterealtime.smack', name: 'smack-tcp', version: '4.2.3'
+//
+//    // https://mvnrepository.com/artifact/org.igniterealtime.smack/smack-tcp
+//    compile group: 'org.igniterealtime.smack', name: 'smack-tcp', version: '4.3.0-beta1'
+//
+//    // https://mvnrepository.com/artifact/org.igniterealtime.smack/smack-java7
+//    compile group: 'org.igniterealtime.smack', name: 'smack-java7', version: '4.2.3'
+
+    // https://mvnrepository.com/artifact/org.igniterealtime.smack/smack-experimental
+    compile group: 'org.igniterealtime.smack', name: 'smack-experimental', version: '4.3.0-beta1'
+
     // https://mvnrepository.com/artifact/org.igniterealtime.smack/smack-core
-    compile group: 'org.igniterealtime.smack', name: 'smack-core', version: '4.2.3'
+    compile group: 'org.igniterealtime.smack', name: 'smack-core', version: '4.3.0-beta1'
 
     // https://mvnrepository.com/artifact/org.igniterealtime.smack/smack-extensions
-    compile group: 'org.igniterealtime.smack', name: 'smack-extensions', version: '4.2.3'
+    compile group: 'org.igniterealtime.smack', name: 'smack-extensions', version: '4.3.0-beta1'
+
+    // https://mvnrepository.com/artifact/org.igniterealtime.smack/smack-experimental
+    compile group: 'org.igniterealtime.smack', name: 'smack-experimental', version: '4.3.0-beta1'
 
     // https://mvnrepository.com/artifact/org.igniterealtime.smack/smack-tcp
-    compile group: 'org.igniterealtime.smack', name: 'smack-tcp', version: '4.2.3'
+    compile group: 'org.igniterealtime.smack', name: 'smack-tcp', version: '4.3.0-beta1'
 
     // https://mvnrepository.com/artifact/org.igniterealtime.smack/smack-java7
-    compile group: 'org.igniterealtime.smack', name: 'smack-java7', version: '4.2.3'
-
+    compile group: 'org.igniterealtime.smack', name: 'smack-java7', version: '4.3.0-beta1'
 }
