@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory
 class FileDownloadTest {
 	def log = LoggerFactory.getLogger(FileDownloadTest.class)
 
-	def url = "https://ip-0a1e0af4:7443/httpfileupload/83da0676-5383-4c2b-8a5d-ac47b1d233eb/CIS-CAT-DEV-CIS_Microsoft_Windows_10_Enterprise_Release_1703_Benchmark-ARF-20180205T191833Z.xml"
+	def url = "https://ip-0a1e0af4:7443/httpfileupload/b757b65a-a568-40c1-b5f8-902080b9d21e/CIS-CAT-DEV-CIS_Microsoft_Windows_10_Enterprise_Release_1607_Benchmark-ARF-20180303T155826Z.xml"
 
 	static void main(String[] args) {
 		new FileDownloadTest().download()
@@ -20,10 +20,31 @@ class FileDownloadTest {
 	def download() {
 		def rest = new RESTClient(url)
 		rest.ignoreSSLIssues()
-		def restresponse = rest.get(contentType: ContentType.XML)
 
-		log.info "Status: ${restresponse.status}"
-		def arf = restresponse.data
-		log.info XmlUtil.serialize(arf)
+		def emptyHeaders = [:]
+		emptyHeaders."Accept" = 'application/xml'
+		emptyHeaders."Prefer" = 'test'
+
+		def response = rest.get(headers: emptyHeaders)
+
+		println("Status: " + response.status)
+		if (response.data) {
+			//println("Content Type: " + response.contentType)
+			println("Headers: " + response.getAllHeaders())
+			def x = new String(response.data.bytes)
+			new File("C:\\Temp\\temp.xml").withWriter { w -> w.write x }
+		}
+
+//		def restresponse = rest.get(contentType: ContentType.XML)
+//
+//		log.info "Status: ${restresponse.status}"
+//		log.info "Response Type: ${restresponse.data.type}"
+//		def xmlOutput = new StringWriter()
+//		def xmlNodePrinter = new XmlNodePrinter(new PrintWriter(xmlOutput))
+//		xmlNodePrinter.print(restresponse.data)
+//
+//		new File("C:\\Temp\\temp.xml").withWriter { w ->
+//			w.write xmlOutput.toString()
+//		}
 	}
 }

@@ -2,6 +2,8 @@ package org.cisecurity.ietf.sacm.tst
 
 import com.xebialabs.overthere.CmdLine
 import groovy.xml.XmlUtil
+import groovyx.net.http.ContentType
+import groovyx.net.http.RESTClient
 import org.cisecurity.assessor.impl.DatastreamCollectionEngine
 import org.cisecurity.assessor.impl.OvalDefinitionsEngine
 import org.cisecurity.assessor.impl.XccdfCollectionEngine
@@ -19,9 +21,12 @@ import org.cisecurity.session.intf.ISession
 import org.cisecurity.util.ExitValues
 import org.jivesoftware.smack.AbstractXMPPConnection
 import org.jivesoftware.smack.ConnectionConfiguration
+import org.jivesoftware.smack.SmackException
 import org.jivesoftware.smack.XMPPException
 import org.jivesoftware.smack.tcp.XMPPTCPConnection
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
+import org.jivesoftware.smackx.httpfileupload.HttpFileUploadManager
+import org.jivesoftware.smackx.httpfileupload.element.Slot
 import org.jivesoftware.smackx.pubsub.AccessModel
 import org.jivesoftware.smackx.pubsub.ConfigureForm
 import org.jivesoftware.smackx.pubsub.ItemPublishEvent
@@ -43,6 +48,7 @@ class TopicWrapper {
 	XMPPTCPConnectionConfiguration config
 	AbstractXMPPConnection         connection
 	PubSubManager                  pubsubManager
+	HttpFileUploadManager          fileUploadManager
 	LeafNode                       topicNode
 
 	def topicName
@@ -60,14 +66,14 @@ class TopicWrapper {
 
 		log.info "Configuring XMPP connection..."
 		config = XMPPTCPConnectionConfiguration.builder()
-			.setUsernameAndPassword(properties.user, properties.password)
+			.setUsernameAndPassword(properties.contentpublisheruser, properties.contentpublisherpwd)
 			.setXmppDomain(properties.xmppdomain)
 			.setHost(properties.host)
 			.setPort(Integer.parseInt(properties.port))
 			.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)
 			.build()
 
-		log.info "Connecting to XMPP server as user ${properties.user}..."
+		log.info "Connecting to XMPP server as user ${properties.contentpublisheruser}..."
 		connection = new XMPPTCPConnection(config)
 		connection.setReplyTimeout(45000) // Reply timeout == 45 sec.
 		connection.connect().login()
@@ -76,6 +82,7 @@ class TopicWrapper {
 
 		// Create a pubsub manager using an existing XMPPConnection
 		pubsubManager = PubSubManager.getInstance(connection)
+		fileUploadManager = HttpFileUploadManager.getInstanceFor(connection)
 
 		initialized = true
 	}
@@ -160,20 +167,56 @@ class TopicWrapper {
 				def collectionId = collectionNode.@id.toString()
 
 				log.info "Constructing payload for collection id --> ${collectionId}..."
+				log.info "Getting Slot..."
+				Slot slot = fileUploadManager.requestSlot(f.name, f.length())
 
-				def sp = new SimplePayload(
-					"data-stream-collection",
-					"http://scap.nist.gov/schema/scap/source/1.2",
-					f.text)
+				log.info "GET URL --> ${slot.getUrl}"
+				log.info "PUT URL --> ${slot.putUrl}"
 
-				log.info "Payload size is ${f.length()}..."
+				def rest = new RESTClient(slot.putUrl)
+				rest.ignoreSSLIssues()
+				def restresponse = rest.put(
+					contentType: ContentType.XML,
+					body: f.text,
+					headers: [Accept: "application/xml"]
+				)
 
-				def pi = new PayloadItem(collectionId, sp)
+				if (restresponse.status == 201) {
+					def payloadContent =
+						"<dsc_get_url xmlns=\"pubsub:dsc:url\">${slot.getUrl.toString()}</dsc_get_url>"
+					def sp = new SimplePayload(
+						"dsc_get_url",
+						"pubsub:dsc:url",
+						payloadContent
+					)
+					def pi = new PayloadItem(collectionId, sp)
 
-				log.info "Publishing payload to topic..."
+					// Publish an Item with payload
+					try {
+						topicNode.publish(pi)
 
-				// Publish an Item with payload
-				topicNode.publish(pi)
+						log.info "Published"
+					} catch (SmackException.NoResponseException nre) {
+						log.error "No Response Exception: Probably a timeout", nre
+					}
+				} else {
+					log.info "File upload response status == ${restresponse.status}"
+				}
+
+
+//				def sp = new SimplePayload(
+//					"data-stream-collection",
+//					"http://scap.nist.gov/schema/scap/source/1.2",
+//					f.text)
+//
+//				log.info "Payload size is ${f.length()}..."
+//
+//				def pi = new PayloadItem(collectionId, sp)
+//
+//				log.info "Publishing payload to topic..."
+//
+//				// Publish an Item with payload
+//				topicNode.publish(pi)
 			} else {
 				log.error "Invalid payload (${rootBasename}) for topic."
 			}

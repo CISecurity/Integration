@@ -69,7 +69,7 @@ class SubscribeAssessPublish {
 
 				borderLayout()
 
-				textlabel1 = label(text: "Listening", constraints: BorderLayout.NORTH)
+				textlabel1 = label(text: "Listening for new Content", constraints: BorderLayout.NORTH)
 			}
 		}
 	}
@@ -85,16 +85,16 @@ class SubscribeAssessPublish {
 
 		log.info "Configuring XMPP connection..."
 		config = XMPPTCPConnectionConfiguration.builder()
-			.setUsernameAndPassword(properties.user, properties.password)
+			.setUsernameAndPassword(properties.contentconsumeruser, properties.contentconsumerpwd)
 			.setXmppDomain(properties.xmppdomain)
 			.setHost(properties.host)
 			.setPort(Integer.parseInt(properties.port))
 			.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)
 			.build()
 
-		log.info "Connecting to XMPP server as user ${properties.user}..."
+		log.info "Connecting to XMPP server as user ${properties.contentconsumeruser}..."
 		connection = new XMPPTCPConnection(config)
-		connection.setReplyTimeout(600000) // Reply timeout == 600 sec.
+		connection.setReplyTimeout(60000) // Reply timeout == 60 sec.
 		connection.connect().login()
 
 		log.info "Getting the PubSubManager..."

@@ -1,6 +1,7 @@
 package org.cisecurity.ietf.sacm
 
 import groovy.xml.XmlUtil
+import groovyx.net.http.RESTClient
 import org.cisecurity.assessor.util.AssessorUtilities
 import org.jivesoftware.smack.XMPPException
 import org.jivesoftware.smackx.pubsub.ItemPublishEvent
@@ -62,21 +63,41 @@ class AssessmentExecutor implements ItemEventListener {
 		log.info "Entering published item handler..."
 
 		items.items.eachWithIndex { item, i ->
+			def itemNode = AssessorUtilities.instance.getParser().parseText(item.toXML())
+			def getUrlNode = itemNode.children()[0]
+			def url = getUrlNode.text()
+
 			def ifp = "C:\\Temp\\XMPP-Item-${i+1}.xml"
 			log.info "Writing File --> ${ifp}"
 
-			def itemNode = AssessorUtilities.instance.getParser().parseText(item.toXML())
-			def payloadNode = itemNode.children()[0]
+			def rest = new RESTClient(url)
+			rest.ignoreSSLIssues()
 
-			def payloadBasename = AssessorUtilities.instance.getElementBasename(payloadNode.name())
-			if (payloadBasename == "data-stream-collection") {
-				new File(ifp).withWriter { w ->
-					w.write XmlUtil.serialize(payloadNode)
-				}
+			def emptyHeaders = [:]
+			emptyHeaders."Accept" = 'application/xml'
+			emptyHeaders."Prefer" = 'test'
+
+			def response = rest.get(headers: emptyHeaders)
+
+			log.info("Status: ${response.status}")
+			if (response.data) {
+				//println("Content Type: " + response.contentType)
+				log.info("Headers: ${response.getAllHeaders()}")
+				def x = new String(response.data.bytes)
+				new File(ifp).withWriter { w -> w.write x }
+
 				assessorQueue << ifp
-			} else {
-				log.error "Invalid payload on topic -- ${payloadBasename}"
 			}
+
+//			def payloadBasename = AssessorUtilities.instance.getElementBasename(payloadNode.name())
+//			if (payloadBasename == "data-stream-collection") {
+//				new File(ifp).withWriter { w ->
+//					w.write XmlUtil.serialize(payloadNode)
+//				}
+//				assessorQueue << ifp
+//			} else {
+//				log.error "Invalid payload on topic -- ${payloadBasename}"
+//			}
 		}
 
 		new AssessmentWrapper(pub: pub).execute(assessorQueue)
