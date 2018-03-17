@@ -49,7 +49,7 @@ class AssessmentContentGridPublisher {
         // Create node if not available
         PubSubManager mgr = PubSubManager.getInstance(xmppConn)
         try {
-            leaf = mgr.getLeafNode("configuration-assessment-content")
+            leaf = mgr.getLeafNode("AssessmentContent")
         }catch(XMPPException.XMPPErrorException xmppErrorException) {
             if ( xmppErrorException.getXMPPError().descriptiveText == null ) {
                 println "Creating node"
@@ -59,7 +59,7 @@ class AssessmentContentGridPublisher {
                 form.setNotifyRetract(true)
                 form.setPersistentItems(true)
                 form.setPublishModel(PublishModel.open)
-                leaf = mgr.createNode("configuration-assessment-content",form)
+                leaf = mgr.createNode("AssessmentContent",form)
             }
 
         }
