@@ -61,3 +61,17 @@ We've also learned a lot more about the possibilities with XMPP and it's set of 
 * [Security Labels In Pub/Sub: XEP-0314](https://xmpp.org/extensions/xep-0314.html) - Enables tagging data with classification categories.
 * [PubSub Chaining: XEP-0253](https://xmpp.org/extensions/xep-0253.html) - Federation of publishing nodes enabling a publish node of one server to be a subscriber to a publishing node of another server
 [Easy User Onboarding: XEP-0253](https://xmpp.org/extensions/xep-0253.html) - Simplified client registration
+
+# Possibilities For The Future
+
+We'd like to try to get an external policy source federated with a local policy source, which might look something like this.
+![Next Steps](https://raw.githubusercontent.com/CISecurity/Integration/master/docs/img/01-next.png)
+
+Then, we will look at what other XMPP extensions (see previous section) might be able to do for us for specific workflows (TBD).
+![Possible XMPP Extensions](https://raw.githubusercontent.com/CISecurity/Integration/master/docs/img/02-possible-xmpp-extensions.png)
+
+We also recognize the distinct possibility that agents could be direct participants in an XMPP-grid.
+![Agents as XMPP Clients](https://raw.githubusercontent.com/CISecurity/Integration/master/docs/img/03-xmpp-as-agent.png)
+
+And, from that thought process XMPP presence with capabilities (features and items) naturally follow.
+![XMPP Presence for Agents](https://raw.githubusercontent.com/CISecurity/Integration/master/docs/img/04-presense-for-endpoints.png)
